@@ -65,7 +65,7 @@ window.addEventListener('load', function(){
             this.angle = 0;
             this.va = Math.random() * 0.2 - 0.1;
             this.bounced = 0;
-            this.bottomBounceBoundary = Math.random() * 100 + 60;
+            this.bottomBounceBoundary = Math.random() * 80 + 60;
         }
         update() {
             this.angle += this.va;
@@ -163,7 +163,7 @@ window.addEventListener('load', function(){
         enterPowerUp() {
             this.powerUpTimer = 0;
             this.powerUp = true;
-            this.game.ammo = this.game.maxAmmo;
+            if (this.game.ammo < this.game.maxAmmo) this.game.ammo = this.game.maxAmmo;
         }
     }
     class Enemy {
@@ -189,12 +189,12 @@ window.addEventListener('load', function(){
             }
         }
         draw(context) {
-            if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
-            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
             if (this.game.debug) {
-                context.font = '20px Helvetica';
-                 context.fillText(this.lives, this.x, this.y);
+                context.strokeRect(this.x, this.y, this.width, this.height);
+                context.fillText(this.lives, this.x, this.y);
             }
+            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
+            context.font = '20px ' + this.fontFamily;
         }
     }
     class Angler1 extends Enemy {
@@ -330,8 +330,8 @@ window.addEventListener('load', function(){
             this.particles = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
-            this.ammo = 5;
-            this.maxAmmo = 20;
+            this.ammo = 20;
+            this.maxAmmo = 50;
             this.ammoTimer = 0;
             this.ammoInterval = 500;
             this.gameOver = false;
@@ -340,7 +340,7 @@ window.addEventListener('load', function(){
             this.gameTime = 0;
             this.timeLimit = 60000;
             this.speed = 1;
-            this.debug = true;
+            this.debug = false;
         }
         update(deltaTime) {
             if (!this.gameOver) this.gameTime += deltaTime;
@@ -401,8 +401,8 @@ window.addEventListener('load', function(){
         }
         draw(context) {
             this.background.draw(context);
-            this.player.draw(context);
             this.ui.draw(context);
+            this.player.draw(context);
             this.particles.forEach(particle => particle.draw(context)); 
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
