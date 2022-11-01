@@ -372,7 +372,7 @@ window.addEventListener('load', function(){
                 let message2;
                 if (this.game.score > this.game.winningScore) {
                     message1 = 'You win!';
-                    message`2 = 'Well done explorer!';
+                    message2 = 'Well done explorer!';
                 } else {
                     message1 = 'You lose!';
                     message2 = 'Try again next time!';
