@@ -53,9 +53,9 @@ window.addEventListener('load', function(){
             this.x = x;
             this.y = y;
             this.image = document.getElementById('gears');
-            this.frameX = Math.random() * 3;
-            this.frameY = Math.random() * 3;
-            this.spriteSize = 100;
+            this.frameX = Math.floor(Math.random() * 3);
+            this.frameY = Math.floor(Math.random() * 3);
+            this.spriteSize = 50;
             this.sizeModifier = (Math.random() * 0.5 + 0.5).toFixed(1);
             this.size = this.spriteSize * this.sizeModifier;
             this.speedX = Math.random() * 6 - 3;
@@ -73,8 +73,8 @@ window.addEventListener('load', function(){
             this.x -= this.speedX;
             this.y += this.speedY;
             if (this.y > this.game.height + this.size || this.x < 0 - this.size) this.markedForDeletion = true;
-            if (this.y > this.game.height - this.bottomBounceBoundary && this.bounced < 2) {
-                this.bounce = true;
+            if (this.y > this.game.height - this.bottomBounceBoundary && !this.bounced < 2) {
+                this.bounce++;
                 this.speedY *= -0.5;
             }
         }
@@ -353,12 +353,12 @@ window.addEventListener('load', function(){
                 this.ammoTimer += deltaTime;
             }
             this.particles.forEach(particle => particle.update()); 
-            this.particles.forEach(particle => !particle.markedForDeletion);
+            this.particles = this.particles.filter(particle => !particle.markedForDeletion);
             this.enemies.forEach(enemy => {
                 enemy.update();
                 if (this.checkCollision(this.player, enemy)) {
                     enemy.markedForDeletion = true;
-                    for (let i = 0; i < 10; i++) {
+                    for (let i = 0; i < 5; i++) {
                         this.particles.push(new Particle(this, enemy.x + 
                         enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
@@ -372,7 +372,7 @@ window.addEventListener('load', function(){
                         this.particles.push(new Particle(this, enemy.x + 
                             enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                         if (enemy.lives <= 0) {
-                            for (let i = 0; i < 10; i++) {
+                            for (let i = 0; i < 5; i++) {
                                 this.particles.push(new Particle(this, enemy.x + 
                                 enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                             }
