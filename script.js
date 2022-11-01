@@ -2,7 +2,7 @@ window.addEventListener('load', function(){
     // canvas setup
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 2000;
+    canvas.width = 1000;
     canvas.height = 500;
 
     class InputHandler {
@@ -102,7 +102,7 @@ window.addEventListener('load', function(){
             this.image = document.getElementById('player');
             this.powerUp = false;
             this.powerUpTimer = 0;
-            this.powerUpLimit = 1000;
+            this.powerUpLimit = 5000;
         }
         update(deltaTime) {
             if (this.game.keys.includes('ArrowUp')) {
@@ -371,8 +371,8 @@ window.addEventListener('load', function(){
                 let message1;
                 let message2;
                 if (this.game.score > this.game.winningScore) {
-                    message1 = 'Most Wondrous!';
-                    message2 = 'Well done explorer!';
+                    message1 = 'You win!';
+                    message`2 = 'Well done explorer!';
                 } else {
                     message1 = 'You lose!';
                     message2 = 'Try again next time!';
@@ -410,9 +410,9 @@ window.addEventListener('load', function(){
             this.ammoInterval = 2500;
             this.gameOver = false;
             this.score = 0;
-            this.winningScore = 100;
+            this.winningScore = 200;
             this.gameTime = 0;
-            this.timeLimit = 30000;
+            this.timeLimit = 60000;
             this.speed = 1;
             this.debug = false;
         }
