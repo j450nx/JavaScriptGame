@@ -70,7 +70,7 @@ window.addEventListener('load', function(){
         update() {
             this.angle += this.va;
             this.speedY += this.gravity;
-            this.x -= this.speedX;
+            this.x -= this.speedX + this.game.speed;
             this.y += this.speedY;
             if (this.y > this.game.height + this.size || this.x < 0 - this.size) this.markedForDeletion = true;
             if (this.y > this.game.height - this.bottomBounceBoundary && !this.bounced < 2) {
@@ -79,7 +79,11 @@ window.addEventListener('load', function(){
             }
         }
         draw(context) {
-            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.x, this.y, this.size, this.size);
+            context.save();
+            context.translate(this.x, this.y);
+            context.rotate(this.angle);
+            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, 0, 0, this.size, this.size);
+            context.restore();
         }
     }
     class Player {
@@ -98,7 +102,7 @@ window.addEventListener('load', function(){
             this.image = document.getElementById('player');
             this.powerUp = false;
             this.powerUpTimer = 0;
-            this.powerUpLimit = 10000;
+            this.powerUpLimit = 1000;
         }
         update(deltaTime) {
             if (this.game.keys.includes('ArrowUp')) {
@@ -326,13 +330,13 @@ window.addEventListener('load', function(){
             this.particles = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
-            this.ammo = 20;
-            this.maxAmmo = 50;
+            this.ammo = 5;
+            this.maxAmmo = 20;
             this.ammoTimer = 0;
             this.ammoInterval = 500;
             this.gameOver = false;
             this.score = 0;
-            this.winningScore = 100;
+            this.winningScore = 200;
             this.gameTime = 0;
             this.timeLimit = 60000;
             this.speed = 1;
